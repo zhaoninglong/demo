@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="helloworld"/>
+  <!-- add our web resources -->
+  <web-resource key="helloworld-resources" name="helloworld Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="helloworld.css" location="/css/helloworld.css"/>
+    <resource type="download" name="helloworld.js" location="/js/helloworld.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>helloworld</context>
+  </web-resource>
+  <!-- publish our component -->
+  <component key="myPluginComponent" class="com.yonyou.sdp.MyPluginComponentImpl" public="true">
+    <interface>com.yonyou.sdp.MyPluginComponent</interface>
+  </component>
+  <!-- import from the product container -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <web-item name="sdp" i18n-name-key="sdp.name" key="sdp" section="system.top.navigation.bar" weight="1000">
+    <description key="sdp.description">The sdp Plugin</description>
+    <label key="sdp.label"/>
+    <link linkId="sdp-link"/>
+  </web-item>
+  <web-section name="ysdp" i18n-name-key="ysdp.name" key="ysdp" location="sdp-link" weight="1000">
+    <description key="ysdp.description">The ysdp Plugin</description>
+    <label key="ysdp.label"></label>
+  </web-section>
+  <web-item name="baidu" i18n-name-key="baidu.name" key="baidu" section="sdp-link/ysdp" weight="1000">
+    <description key="baidu.description">The baidu Plugin</description>
+    <label key="baidu"/>
+    <link linkId="baidu-link">http://www.baidu.com</link>
+  </web-item>
+  <web-item name="issuelist" i18n-name="issue_list.name" key="issue_list" section="sdp-link/ysdp" weight="1010">
+		<description key="issue_list.description">The Issue Plugin</description>
+    	<label key="issuelist">IssueList</label>
+    	<link linkId="issue-list-link">/secure/Issue.jspa</link>
+  </web-item>
+  
+  <webwork1 key="issuewebwork" name="Issue Webwork Module" i18n-name-key="issuewebwork.name"  class="java.lang.Object">
+    <description key="issuewebwork.description">The Issue Manager Webwork Module Plugin</description>
+    <actions>
+	    <action key="issueaction" name="com.yonyou.sdp.action.IssueWebAction" alias="Issue">
+	        <view name="input">/templates/issuelist.vm</view>
+	    </action>
+    </actions>
+  </webwork1>
+  
+  <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" filter=""/>
+</atlassian-plugin>

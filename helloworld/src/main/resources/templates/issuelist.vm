@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>All Tutorial Issues &mdash; Issue CRUD Tutorial</title>
+    <meta name="decorator" content="atl.general">
+</head>
+<body class="page-type-admin">
+<div class="content-container">
+ 
+    <div class="content-body">
+        <h1>You've Got #if($issues.size()==0)<span style="color:red">NO</span>#end Issues!</h1>
+        #if ($issues.size() > 0)
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Summary</th>
+                        <th>Description</th>
+                        <th>Assignee</th>
+                        <th>Reporter</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #foreach( $issue in $issues )
+                        <tr>
+                            <td>$issue.getKey()</td>
+                            <td>$issue.getSummary()</td>
+                            <td>
+                                #if($issue.getDescription())
+                            $issue.getDescription()
+                        #end
+                            </td>
+                            <td>
+                                $issue.getAssignee().getName()
+                            </td>
+                            <td>
+                                $issue.getReporter().getName()
+                            </td>
+                        </tr>
+                        #end
+                    </tbody>
+                </table>
+            </div>
+        #end
+    </div>
+</div>
+</body>
+</html>
